@@ -8,7 +8,7 @@ Time spent: **3** hours spent in total
 
 ## Summary
 
-**Name of your app** is an android app that **fill in description (Example: "An app that displays a scrollable list of characters from the Marvel API")**
+**Name of your app** is an android app that **An app that displays a scrollable list of characters from the Marvel API**
 
 If I had to describe this project in three (3) emojis, they would be: **emojis here**
 
@@ -38,7 +38,7 @@ Here's a video / GIF that demos all of the app's implemented features:
 
 <img src='https://i.imgur.com/uYmOJEC.gif' title='Video Demo' width='' alt='Video Demo' />
 
-GIF created with **your chosen GIF tool**
+GIF created with **peek**
 
 <!-- Recommended tools:
 - [Kap](https://getkap.co/) for macOS
