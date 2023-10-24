@@ -8,7 +8,7 @@ Time spent: **3** hours spent in total
 
 ## Summary
 
-**Name of your app** is an android app that **An app that displays a scrollable list of characters from the Marvel API**
+**Marvel ViewShow** is an android app that **displays a scrollable list of characters from the Marvel API**
 
 If I had to describe this project in three (3) emojis, they would be: **emojis here**
 
