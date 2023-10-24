@@ -46,9 +46,7 @@ GIF created with **peek**
 - [peek](https://github.com/phw/peek) for Linux. -->
 
 ## Notes
-
-Here's a place for any other notes on the app, it's creation process, or what you learned this unit!
-
+I learned that json works nice with RecyclerView
 ## License
 
 Copyright **2023** **Phi Long Bui**
