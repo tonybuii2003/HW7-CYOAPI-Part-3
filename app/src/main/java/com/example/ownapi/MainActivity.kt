@@ -6,6 +6,8 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.codepath.asynchttpclient.AsyncHttpClient
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
@@ -30,6 +32,10 @@ class MainActivity : AppCompatActivity() {
     var characterName = ""
     var characterImageURL = ""
     var characterId = ""
+    private lateinit var marvelList: MutableList<String>
+    private lateinit var marvelID: MutableList<String>
+    private lateinit var marvelName: MutableList<String>
+    private lateinit var rvMarvels: RecyclerView
     private fun getMarvelImageURL() {
         val client = AsyncHttpClient()
         client[url, object : JsonHttpResponseHandler() {
@@ -38,14 +44,22 @@ class MainActivity : AppCompatActivity() {
                 val data = json.jsonObject.getJSONObject("data")
                 val results = data.getJSONArray("results")
                 if (results.length() > 0) {
-                    val randomIndex = Random.nextInt(results.length())
-                    val randomCharacter = results.getJSONObject(randomIndex)
-                    characterName = randomCharacter.getString("name")
-                    characterId = randomCharacter.getString("id")
-                    val thumbnail = randomCharacter.getJSONObject("thumbnail")
-                    val imagePath = thumbnail.getString("path")
-                    val imageExtension = thumbnail.getString("extension")
-                    characterImageURL = "$imagePath.$imageExtension"
+                    for (i in 0 until results.length()) {
+                        val randomCharacter = results.getJSONObject(i)
+                        characterName = randomCharacter.getString("name")
+                        characterId = randomCharacter.getString("id")
+
+                        val thumbnail = randomCharacter.getJSONObject("thumbnail")
+                        val imagePath = thumbnail.getString("path")
+                        val imageExtension = thumbnail.getString("extension")
+                        characterImageURL = "$imagePath.$imageExtension"
+                        marvelList.add(characterImageURL)
+                        marvelID.add(characterId)
+                        marvelName.add(characterName)
+                    }
+                    val adapter = MarvelAdapter(marvelList, marvelName, marvelID)
+                    rvMarvels.adapter = adapter
+                    rvMarvels.layoutManager = LinearLayoutManager(this@MainActivity)
                 } else {
                     Log.d("Marvel", "No character found!")
                 }
@@ -61,28 +75,14 @@ class MainActivity : AppCompatActivity() {
             }
         }]
     }
-    private fun getNextCharacter(button: Button, imageView: ImageView, charName: TextView, charId: TextView) {
-        button.setOnClickListener {
-            getMarvelImageURL()
-            println()
-            Glide.with(this)
-                .load(characterImageURL)
-                .fitCenter()
-                .into(imageView)
-            charName.text = characterName
-            charId.text = characterId
-        }
-    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val button = findViewById<Button>(R.id.marvelButton)
-        val imageView = findViewById<ImageView>(R.id.marvelImage)
-        val charName= findViewById<TextView>(R.id.characterName)
-        val charId= findViewById<TextView>(R.id.characterId)
-
-        button.setOnClickListener {
-            getNextCharacter(button, imageView, charName, charId)
-        }
+        rvMarvels = findViewById(R.id.marvel_list)
+        marvelList = mutableListOf()
+        marvelID = mutableListOf()
+        marvelName = mutableListOf()
+        getMarvelImageURL()
     }
 }
